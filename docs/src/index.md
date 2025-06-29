@@ -5,7 +5,13 @@ hide:
 ---
 # xgoimports
 
-A better goimports that keeps your imports sorted and grouped nicely.
+- Are you a Golang developer?
+- Do you like your `import`s sorted (`goimports`-style)?
+- Are you tired of IDEs breaking your imports so bad that autoformatter cannot fix them?
+  
+If so, better-goimports will help you!
+It’s a drop-in replacement for `goimports` that does one thing `goimports` doesn’t:
+it makes sure your imports are ALWAYS formatted as pretty as it ever gets!
 
 ## Why?
 
