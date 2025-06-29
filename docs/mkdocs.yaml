@@ -1,0 +1,96 @@
+site_name: xgoimports
+site_url: https://kapitanov.github.io/xgoimports/
+site_author: Albert Kapitanov
+site_description: >-
+  xgoimports is a better goimports that keeps your imports sorted and grouped nicely.
+site_dir: ../artifacts/docs
+docs_dir: src
+
+repo_name: kapitanov/xgoimports
+repo_url: https://github.com/kapitanov/xgoimports
+copyright: "(c) 2025 Albert Kapitanov"
+
+theme:
+  name: material
+  favicon: favicon.png
+  font:
+    text: Roboto
+    code: Roboto Mono
+  language: en
+  palette:
+      primary: custom
+      accent: '#8DDBE0'
+  logo: favicon.png
+  favicon: favicon.png
+  features:
+    - content.code.annotate
+    - content.code.select
+    - content.code.copy
+
+plugins:
+  - search:
+      lang: en
+  - minify:
+      minify_html: true
+  - social:
+      cards: true
+      cards_layout_options:
+        title: xgoimports
+        description: A better goimports that keeps your imports sorted and grouped nicely
+
+extra:
+  generator: true
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/kapitanov/xgoimports
+  analytics:
+    provider: google
+    property: G-XXXXXXXXXX # TODO Replace with actual Google Analytics property ID
+  consent:
+    title: Cookie consent
+    description: >- 
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better
+
+markdown_extensions:
+  - smarty
+  - sane_lists
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - md_in_html
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+nav:
+  - src/index.md
