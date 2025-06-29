@@ -5,12 +5,13 @@ hide:
 ---
 # xgoimports
 
-A better goimports that keeps your imports sorted and grouped nicely
+A better goimports that keeps your imports sorted and grouped nicely.
 
 ## Why?
 
 As Go developers we often would like to have our imports grouped by origin:
 standard library, then third-party libraries and at last - local packages.
+
 But mainaining this order is a pain, especially when your imports are separated
 by empty lines - and auto-importing in IDE is quite notorious to produce such a mess:
 
@@ -32,29 +33,53 @@ Here is where `xgoimports` comes in handy:
 
 <div class="grid cards" markdown>
 
-- With `go fmt` or `goimports`:
+- **Well-known formatters can't help here**
 
-    ```go
-    // "github.com/myorg/myproject" is mean to be
-    // a local package.
-
-    import (
-        "github.com/myorg/myproject/subpkg1"
-
-        "go.uber.org/atomic"
-
-        "github.com/myorg/myproject/subpkg2"
-
-        "github.com/rs/zerolog/log"
-
-        "fmt"
-    )
+    ```shell
+    $ go fmt yourfile.go
+    $ goimports -w -format-only \
+        -local github.com/myorg/myproject \
+        yourfile.go
     ```
+
+- **But `xgoimports` can!**
+
+    ```shell
+    $ xgoimports -w -format-only \
+        -local github.com/myorg/myproject \
+        yourfile.go
+    ```
+
+</div>
+
+<div class="grid cards" markdown>
+
+- With `go fmt` or `goimports`:
 
     - ☹️ Imports are not grouped by origin, it's a mess!
     - ☹️ Even `goimports -local github.com/myorg/myproject` doesn't help here.
 
+    ```go
+    // "github.com/myorg/myproject" is mean to be
+    // a local package.
+
+    import (
+        "github.com/myorg/myproject/subpkg1"
+
+        "go.uber.org/atomic"
+
+        "github.com/myorg/myproject/subpkg2"
+
+        "github.com/rs/zerolog/log"
+
+        "fmt"
+    )
+    ```
+
 - With `xgoimports`:
+
+    - 😀 Imports are grouped by origin, so it's much easier to read and maintain.
+    - 😀 Even if (_or when_) an IDE messes up with your imports - `xgoimports` will fix them at once!
 
     ```go
     // "github.com/myorg/myproject" is mean to be
@@ -70,9 +95,6 @@ Here is where `xgoimports` comes in handy:
         "github.com/myorg/myproject/subpkg2"
     )
     ```
-
-    - 😀 Imports are grouped by origin, so it's much easier to read and maintain.
-    - 😀 Even if (_or when_) an IDE messes up with your imports - `xgoimports` will fix them at once!
 
 </div>
 
@@ -87,13 +109,13 @@ xgoimports -w yourfile.go
 It's recommmended to use it with `-local` flag to specify your local packages, so they are grouped together:
 
 ```bash
-xgoimports -local=github.com/yourusername/yourproject -w -format-only yourfile.go
+xgoimports -local github.com/yourusername/yourproject -w -format-only yourfile.go
 ```
 
 Often, you would want to run it on all your Go files in the project:
 
 ```bash
-xgoimports -local=github.com/yourusername/yourproject -w -format-only $(find . -type f -name '*.go' -not -path "./vendor/*")
+xgoimports -local github.com/yourusername/yourproject -w -format-only $(find . -type f -name '*.go' -not -path "./vendor/*")
 ```
 
 ### Handy snippets
@@ -105,7 +127,7 @@ xgoimports -local=github.com/yourusername/yourproject -w -format-only $(find . -
     GO_FILES="$(find . -type f -name '*.go' -not -path "./vendor/*")"
     LOCAL_PACKAGES="github.com/yourusername/yourproject"
 
-    goimports -local="$LOCAL_PACKAGES" -w -format-only $GO_FILES
+    goimports -local "$LOCAL_PACKAGES" -w -format-only $GO_FILES
     ```
 
 === "For your Makefile"
@@ -115,7 +137,7 @@ xgoimports -local=github.com/yourusername/yourproject -w -format-only $(find . -
     LOCAL_PACKAGES := github.com/yourusername/yourproject
 
     format:
-        @xgoimports -local=$(LOCAL_PACKAGES) -w -format-only $(GO_FILES)
+        @xgoimports -local $(LOCAL_PACKAGES) -w -format-only $(GO_FILES)
     ```
 
 === "For VSCode"
@@ -125,15 +147,17 @@ xgoimports -local=github.com/yourusername/yourproject -w -format-only $(find . -
         "editor.formatOnSave": true,
         "go.formatTool": "custom",
         "go.alternateTools": {
-        "customFormatter": "xgoimports"
+            "customFormatter": "xgoimports"
         },
         "go.formatFlags": [
-        "-local=\"github.com/yourusername/yourproject\"",
-        "-w",
-        "-format-only"
+            "-local=\"github.com/yourusername/yourproject\"",
+            "-w",
+            "-format-only"
         ]
     }
     ```
+
+Sorry, but it seems to be no way to set `xgoimports` as a default formatter in GoLand IDE.
 
 ### Current limitations
 
