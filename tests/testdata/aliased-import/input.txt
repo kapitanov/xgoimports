@@ -1,0 +1,14 @@
+package main
+
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+	myshared "local.example.com/group/project/shared"
+)
+
+func init() {
+	var _ fmt.GoStringer
+	var _ cobra.Command
+	myshared.DoNothing()
+}

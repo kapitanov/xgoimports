@@ -1,0 +1,18 @@
+package main
+
+import (
+	// Inside import (1)
+	"fmt" // Trailing (1)
+
+	// Inside import (2)
+	"github.com/spf13/cobra" // Trailing (2)
+	// Inside import (3)
+	"local.example.com/group/project/shared" // Trailing (3)
+	// Inside import (4)
+)
+
+func init() {
+	var _ fmt.GoStringer
+	var _ cobra.Command
+	shared.DoNothing()
+}

@@ -1,0 +1,25 @@
+This project includes code derived from the Go programming language toolchain,
+originally developed by The Go Authors and distributed by Google Inc.
+
+Copyright 2013 The Go Authors. All rights reserved.
+
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file, or at:
+
+    https://cs.opensource.google/go/x/tools/+/refs/tags/v0.34.0:LICENSE
+
+Source code for this project is available at:
+
+    https://cs.opensource.google/go/x/tools/+/refs/tags/v0.34.0:cmd/goimports
+
+---
+
+Modifications and additions in this project are:
+
+Copyright 2025 Albert Kapitanov
+
+These changes are also licensed under the BSD 3-Clause License,
+unless stated otherwise in individual source files.
+
+
+// https://cs.opensource.google/go/x/tools/+/refs/tags/v0.34.0:cmd/goimports/goimports.go

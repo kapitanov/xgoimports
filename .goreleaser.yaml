@@ -1,0 +1,86 @@
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+project_name: xgoimports
+dist: artifacts/dist
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    ignore:
+      - goos: freebsd
+        goarch: arm
+      - goos: freebsd
+        goarch: arm64
+      - goos: windows
+        goarch: arm
+      - goos: windows
+        goarch: arm64
+    ldflags: "-s -w -X main.version={{.Tag}}+{{.ShortCommit}}"
+
+archives:
+  - id: xgoimports
+    name_template: >-
+      {{.ProjectName}}_
+      {{- .Tag}}_
+      {{- if eq .Os "darwin"}}macos
+      {{- else if eq .Os "windows"}}win
+      {{- else}}{{.Os}}{{end}}_
+      {{- if eq .Arch "amd64"}}x86_64
+      {{- else if eq .Arch "386"}}i386
+      {{- else}}{{.Arch}}{{end}}
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+
+brews:
+  - name: xgoimports
+    repository:
+      owner: kapitanov
+      name: homebrew-apps
+      branch: master
+    commit_author:
+      name: Albert Kapitanov
+      email: 1442286+kapitanov@users.noreply.github.com
+    commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
+    homepage: https://github.com/kapitanov/xgoimports
+    description: A better goimports that keeps your imports sorted and grouped nicely
+    license: BSD-3-Clause
+
+nfpms:
+  - id: xgoimports
+    package_name: xgoimports
+    file_name_template: "{{.ProjectName}}_{{.Tag}}_{{.Os}}_{{.Arch}}"
+    vendor: Albert Kapitanov
+    homepage: https://github.com/kapitanov/xgoimports
+    maintainer: Albert Kapitanov <1442286+kapitanov@users.noreply.github.com>
+    description: A better goimports that keeps your imports sorted and grouped nicely
+    license: BSD-3-Clause
+    formats:
+      - deb
+      - rpm
+      - apk
+    bindir: /usr/bin
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+release:
+  footer: >-
+
+    ---
+
+    Released by [GoReleaser](https://github.com/goreleaser/goreleaser).

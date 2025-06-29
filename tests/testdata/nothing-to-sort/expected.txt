@@ -1,0 +1,9 @@
+package main
+
+import (
+	"fmt"
+)
+
+func init() {
+	var _ fmt.GoStringer
+}
