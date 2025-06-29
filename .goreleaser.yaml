@@ -25,7 +25,7 @@ builds:
         goarch: arm
       - goos: windows
         goarch: arm64
-    ldflags: "-s -w -X main.version={{.Tag}}+{{.ShortCommit}}"
+    ldflags: "-s -w"
 
 archives:
   - id: xgoimports

@@ -1,0 +1,40 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  goreleaser:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: set up go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache-dependency-path: go.sum
+      - name: go caches
+        uses: actions/cache@v4
+        with:
+          path: |
+            /home/runner/go/go/pkg/mod
+            /home/runner/go/bin
+          key: ${{ runner.os }}-golang-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-golang-
+      - name: run goreleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: latest
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GORELEASER_GITHUB_TOKEN }}
