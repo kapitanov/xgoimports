@@ -1,0 +1,44 @@
+package main
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"io/fs"
+	"net/url"
+	"strings"
+	"time"
+
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/source/iofs"
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+	gormlogger "gorm.io/gorm/logger"
+	"moul.io/zapgorm2"
+
+	"local.example.com/our-awesome-codebase/our-awesome-library/libsql"
+	"local.example.com/our-awesome-codebase/our-awesome-service/sql"
+
+	_ "github.com/golang-migrate/migrate/v4/database/pgx/v5" // Import pgx5 driver
+)
+
+func init() {
+	_ = context.Canceled
+	_ = errors.New("")
+	var _ fmt.Stringer
+	var _ fs.FS
+	_, _ = url.Parse("")
+	_ = strings.TrimSpace("")
+	_ = time.Now()
+
+
+	migrate.Do(iofs.Root, pgx.Use(pgconn.New()))
+	zap.Use(zapcore.New())
+	gorm.Use(postgres.New(), gormlogger.New(zapgorm2.New()))
+
+	libsql.ParseWith(sql.Parser())
+}

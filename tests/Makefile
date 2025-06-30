@@ -1,17 +1,20 @@
-LOCAL = local.example.com/group/project
+LOCAL = local.example.com
+
+TESTCASES = simple \
+	already-sorted \
+	nothing-to-sort \
+	few-import-groups \
+	misformatted-by-ide \
+	dot-import \
+	discarded-import \
+	aliased-import \
+	import-spec-comments \
+	import-group-comments \
+	cgo-import \
+	issue-1
 
 all:
-	@make _test TESTCASE=simple
-	@make _test TESTCASE=already-sorted
-	@make _test TESTCASE=nothing-to-sort
-	@make _test TESTCASE=few-import-groups
-	@make _test TESTCASE=misformatted-by-ide
-	@make _test TESTCASE=dot-import
-	@make _test TESTCASE=discarded-import
-	@make _test TESTCASE=aliased-import
-	@make _test TESTCASE=import-spec-comments
-	@make _test TESTCASE=import-group-comments
-	@make _test TESTCASE=cgo-import
+	@$(foreach testcase,$(TESTCASES),make _test TESTCASE=$(testcase);)
 
 _test:
 	@../artifacts/xgoimports -local $(LOCAL) -e ./testdata/$(TESTCASE)/input.txt > ./testdata/$(TESTCASE)/actual.txt

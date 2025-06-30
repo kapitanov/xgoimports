@@ -123,9 +123,12 @@ func transformGenDecl(decl *ast.GenDecl) *ast.GenDecl {
 }
 
 func transformImportSpec(importSpec *ast.ImportSpec) (*ast.ImportSpec, bool) {
-	if importSpec.Doc != nil && len(importSpec.Doc.List) > 0 {
-		// If the import has a comment, we cannot proceed with the transformation,
-		// otherwise the comment's position will be lost.
+	hasDoc := importSpec.Doc != nil && len(importSpec.Doc.List) > 0
+	hasComment := importSpec.Comment != nil && len(importSpec.Comment.List) > 0
+
+	if hasDoc || hasComment {
+		// If the import has a comment, we cannot proceed with the transformation;
+		// otherwise, the comment's position will be lost.
 		return nil, false
 	}
 
